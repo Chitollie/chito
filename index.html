@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chitollie</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="cursor"></div>
+
+  <div class="page">
+    <aside class="sidebar">
+      <span class="sidebar-logo">Chitollie</span>
+      <div class="sidebar-line"></div>
+      <span class="sidebar-index">01</span>
+    </aside>
+
+    <main>
+      <nav>
+        <span class="nav-tag">Chargement des folies... Réussi</span>
+        <span class="nav-status"><span class="dot"></span>En ligne</span>
+      </nav>
+
+      <section class="hero">
+        <p class="hero-eyebrow">Bienvenue</p>
+        <h1 class="hero-name">Chitollie</h1>
+        <p class="hero-sub">Retrouvez tous mes réseaux en un seul endroit.</p>
+      </section>
+
+      <div class="links-row">
+        <div>
+          <p class="col-label">Réseaux</p>
+          <ul class="links-list">
+            <li><a href="https://twitch.tv/chitollie" target="_blank"><span class="num">01</span>Twitch<span class="arr">↗</span></a></li>
+            <li><a href="#" target="_blank"><span class="num">02</span>Discord<span class="arr">↗</span></a></li>
+          </ul>
+        </div>
+
+        <div>
+          <p class="col-label">Projets</p>
+          <ul class="links-list">
+            <li><a href="haven.html"><span class="num">01</span>Haven <small class="tag">GTA RP</small><span class="arr">→</span></a></li>
+            <li><a href="autres.html"><span class="num">02</span>Autres<span class="arr">→</span></a></li>
+          </ul>
+        </div>
+
+        <div>
+          <p class="col-label">Soutien</p>
+          <ul class="links-list">
+            <li><a href="donation.html"><span class="num">01</span>Me soutenir<span class="arr">→</span></a></li>
+          </ul>
+        </div>
+      </div>
+    </main>
+
+    <aside class="sidebar-right">
+      <div class="schedule-vertical">
+        <p class="schedule-label">Planning</p>
+        <div class="streams-list">
+          <div class="stream-item">
+            <div class="stream-dot"></div>
+            <div class="stream-info">
+              <div class="stream-day">Mercredi</div>
+              <div class="stream-time">20h</div>
+            </div>
+          </div>
+          <div class="stream-item">
+            <div class="stream-dot"></div>
+            <div class="stream-info">
+              <div class="stream-day">Vendredi</div>
+              <div class="stream-time">20h</div>
+            </div>
+          </div>
+          <div class="stream-item">
+            <div class="stream-dot"></div>
+            <div class="stream-info">
+              <div class="stream-day">Samedi</div>
+              <div class="stream-time">18h</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <footer>
+      <span>© 2020-2026 Chitollie</span>
+      <span>Streamer · Créateur</span>
+    </footer>
+  </div>
+
+  <script>
+    const c = document.getElementById('cursor');
+    document.addEventListener('mousemove', e => {
+      c.style.left = e.clientX + 'px';
+      c.style.top  = e.clientY + 'px';
+    });
+    document.querySelectorAll('a').forEach(el => {
+      el.addEventListener('mouseenter', () => c.classList.add('hover'));
+      el.addEventListener('mouseleave', () => c.classList.remove('hover'));
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chitollie — Haven (GTA RP)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .page { grid-template-columns: 56px 1fr; }
+    nav { margin-bottom: 4vw; }
+    .hero { flex: none; }
+
+    .back-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--dim);
+      transition: color 0.2s;
+    }
+    .back-btn:hover { color: var(--accent); }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      margin-top: 1.6rem;
+      padding: 0.55rem 1rem;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--card);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--dim);
+      align-self: flex-start;
+      animation: fadeIn 0.5s 0.35s ease both;
+    }
+    .status-pill .sdot { width: 8px; height: 8px; border-radius: 50%; background: var(--soft); }
+    .status-pill.online { color: #3f8f6b; }
+    .status-pill.online .sdot { background: #4fbf8b; animation: blink 2.2s ease infinite; }
+    .status-pill.offline { color: #b45a7a; }
+    .status-pill.offline .sdot { background: #e07a9c; }
+    .status-pill .players { color: var(--ink); font-weight: 600; letter-spacing: 0.1em; }
+
+    .cards {
+      margin-top: clamp(2rem, 4vw, 3rem);
+      border-top: 1px solid var(--line);
+      padding-top: 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.2rem;
+      animation: fadeIn 0.5s 0.45s ease both;
+    }
+    .card {
+      background: rgba(255,255,255,0.45);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 1.4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      transition: border-color 0.3s, transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(155,111,212,0.12);
+    }
+    .card .col-label { margin-bottom: 0; }
+    .card p { font-size: 0.85rem; line-height: 1.6; color: var(--dim); }
+    .big { font-size: 1.6rem; font-weight: 700; color: var(--ink); line-height: 1.1; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      text-decoration: none;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 700;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--paper);
+      background: var(--ink);
+      border: none;
+      padding: 0.8rem 1.2rem;
+      cursor: none;
+      transition: background 0.2s, transform 0.18s;
+      align-self: flex-start;
+    }
+    .btn:hover { background: var(--accent); transform: translateY(-2px); }
+
+    .ip {
+      display: flex;
+      align-items: stretch;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .ip code {
+      flex: 1;
+      min-width: 0;
+      padding: 0.7rem 0.8rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.74rem;
+      color: var(--ink);
+      overflow-wrap: anywhere;
+    }
+    .ip button {
+      border: none;
+      border-left: 1px solid var(--line);
+      background: transparent;
+      color: var(--accent);
+      display: grid;
+      place-items: center;
+      flex: none;
+      padding: 0 0.75rem;
+      cursor: none;
+      transition: background 0.2s;
+    }
+    .ip button:hover { background: var(--bg2); }
+
+    .steps { list-style: none; counter-reset: s; display: flex; flex-direction: column; gap: 0.5rem; }
+    .steps li { counter-increment: s; font-size: 0.85rem; color: var(--dim); line-height: 1.5; display: flex; gap: 0.6rem; }
+    .steps li::before { content: counter(s, decimal-leading-zero); font-size: 0.6rem; font-weight: 700; color: var(--accent2); padding-top: 0.2rem; }
+    .steps a { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <div id="cursor"></div>
+
+  <div class="page">
+    <aside class="sidebar">
+      <span class="sidebar-logo">Chitollie</span>
+      <div class="sidebar-line"></div>
+      <span class="sidebar-index">03</span>
+    </aside>
+
+    <main>
+      <nav>
+        <a href="index.html" class="back-btn">← Retour</a>
+        <span class="nav-tag">Projets</span>
+      </nav>
+
+      <section class="hero">
+        <p class="hero-eyebrow">✦ Serveur GTA RP</p>
+        <h1 class="hero-name">Haven</h1>
+        <p class="hero-sub">Un serveur roleplay sur FiveM. Rejoins la ville et écris ta propre histoire.</p>
+        <div class="status-pill" id="status"><span class="sdot"></span><span id="status-text">Vérification…</span></div>
+      </section>
+
+      <div class="cards">
+        <div class="card">
+          <p class="col-label">✦ Rejoindre</p>
+          <p>Lance FiveM et rejoins directement le serveur en un clic.</p>
+          <a href="https://cfx.re/join/7bbybqd" target="_blank" rel="noopener" class="btn">Se connecter ↗</a>
+        </div>
+
+        <div class="card">
+          <p class="col-label">✦ Adresse IP</p>
+          <p>Ou ouvre la console FiveM (F8) et colle cette commande :</p>
+          <div class="ip">
+            <code id="ip">connect haven.arkya.app:30132</code>
+            <button type="button" id="copy" aria-label="Copier" title="Copier"></button>
+          </div>
+        </div>
+
+        <div class="card">
+          <p class="col-label">✦ Communauté</p>
+          <p>Règlement, annonces, candidatures et entraide se passent sur le Discord.</p>
+          <a href="https://discord.gg/EpBGChYuUm" target="_blank" rel="noopener" class="btn">Discord ↗</a>
+        </div>
+
+        <div class="card">
+          <p class="col-label">✦ Création</p>
+          <span class="big">12 octobre 2026</span>
+          <p id="age"></p>
+        </div>
+
+        <div class="card">
+          <p class="col-label">✦ Première fois ?</p>
+          <ol class="steps">
+            <li><span>Possède GTA V sur PC.</span></li>
+            <li><span>Installe <a href="https://fivem.net" target="_blank" rel="noopener">FiveM</a>.</span></li>
+            <li><span>Rejoins le Discord et lis le règlement.</span></li>
+            <li><span>Clique sur « Se connecter ».</span></li>
+          </ol>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <span>© 2026 Chitollie</span>
+      <span>Streamer · Créateur</span>
+    </footer>
+  </div>
+
+  <script>
+    const c = document.getElementById('cursor');
+    document.addEventListener('mousemove', e => {
+      c.style.left = e.clientX + 'px';
+      c.style.top  = e.clientY + 'px';
+    });
+    document.querySelectorAll('a, button').forEach(el => {
+      el.addEventListener('mouseenter', () => c.classList.add('hover'));
+      el.addEventListener('mouseleave', () => c.classList.remove('hover'));
+    });
+
+    // Copier l'IP
+    const copyIcon = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
+    const checkIcon = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+    const copyBtn = document.getElementById('copy');
+    copyBtn.innerHTML = copyIcon;
+    copyBtn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(document.getElementById('ip').textContent);
+        copyBtn.innerHTML = checkIcon;
+        copyBtn.title = 'Copié !';
+      } catch {
+        copyBtn.title = 'Erreur';
+      }
+      setTimeout(() => { copyBtn.innerHTML = copyIcon; copyBtn.title = 'Copier'; }, 1800);
+    });
+
+    // Âge du serveur
+    const created = new Date(2026, 9, 12);
+    const days = Math.floor((Date.now() - created) / 86400000);
+    document.getElementById('age').textContent =
+      days > 0 ? `Le serveur existe depuis ${days} jour${days > 1 ? 's' : ''}.` : "Le serveur vient d'ouvrir !";
+
+    // Statut du serveur
+    const pill = document.getElementById('status');
+    const text = document.getElementById('status-text');
+    async function refreshStatus() {
+      try {
+        const res = await fetch('/api/haven-status');
+        const s = await res.json();
+        pill.classList.toggle('online', s.online);
+        pill.classList.toggle('offline', !s.online);
+        if (s.online) {
+          const max = s.maxPlayers ? `/${s.maxPlayers}` : '';
+          text.innerHTML = `Serveur ouvert <span class="players">· ${s.players}${max} joueur${s.players > 1 ? 's' : ''}</span>`;
+        } else {
+          text.textContent = 'Serveur fermé';
+        }
+      } catch {
+        text.textContent = 'Statut indisponible';
+      }
+    }
+    refreshStatus();
+    setInterval(refreshStatus, 60000);
+  </script>
+</body>
+</html>
