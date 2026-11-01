@@ -331,6 +331,22 @@ nav {
   50% { opacity: 0.4; }
 }
 
+/* Buttons */
+.dl-btn {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  background: var(--accent);
+  color: var(--paper);
+  text-decoration: none;
+  font-weight: 600;
+}
+.dl-btn:hover { filter: brightness(1.15); }
+.gh-link { margin-left: 12px; opacity: .7;}
+.version { font-size: .8em; opacity: .6; margin-left: 6px; }
+
+
 /* Footer */
 footer {
   padding: 1.4rem 4rem;
