@@ -155,7 +155,22 @@
             <details class="sub">
               <summary>BetterDiscord <span class="chev">+</span></summary>
               <div class="sub-body">
-                <p class="empty">Bientôt disponible.</p>
+
+                <!-- data-repo = "pseudo/repo" GitHub, c'est ce que le script lit -->
+                <div class="item" data-repo="Chitollie/ChitoTheme">
+                  <span class="item-title">
+                    ChitoTheme
+                    <span class="badge">Plugin & Thème</span>
+                    <span class="version"></span>
+                  </span>
+                  <p>Un plugin et thème pour BetterDiscord.</p>
+                  <a class="dl-btn"
+                     href="https://github.com/Chitollie/ChitoTheme/releases/latest/download/ChitoTheme.zip">
+                    ⬇ Télécharger
+                  </a>
+                  <a class="gh-link" href="https://github.com/Chitollie/ChitoTheme" target="_blank" rel="noopener">GitHub</a>
+                </div>
+
               </div>
             </details>
           </div>
@@ -164,14 +179,39 @@
         <details class="cat">
           <summary><span class="num">02</span>Applications <span class="count">1 projet</span><span class="chev">+</span></summary>
           <div class="cat-body">
-            <div class="item">
-              <span class="item-title">Post-It <span class="badge">Ma première app</span></span>
-              <p>Permet de placer des post-it directement sur ton écran, avec un minuteur. De nouvelles fonctionnalités arriveront peut-être, sur demande.</p>
+            <div class="item" data-repo="Chitollie/Post-It">
+              <span class="item-title">
+                Post-It
+                <span class="badge">Ma première app</span>
+                <span class="version"></span>
+              </span>
+              <p>Permet de placer des post-it directement sur ton écran, avec un minuteur.</p>
+              <a class="dl-btn"
+                 href="https://github.com/Chitollie/Post-It/releases/latest/download/Post-It.exe">
+                ⬇ Télécharger
+              </a>
+              <a class="gh-link" href="https://github.com/Chitollie/Post-It" target="_blank" rel="noopener">GitHub</a>
             </div>
           </div>
         </details>
       </div>
     </main>
+
+<script>
+  // Pour chaque projet qui a un data-repo, on demande à GitHub sa dernière version
+  document.querySelectorAll('.item[data-repo]').forEach(async (item) => {
+    const repo = item.dataset.repo;
+    const label = item.querySelector('.version');
+    try {
+      const res = await fetch(`https://api.github.com/repos/${repo}/releases/latest`);
+      if (!res.ok) return;                 // pas de release → on n'affiche rien
+      const data = await res.json();
+      label.textContent = data.tag_name;   // ex : "v1.2.0"
+    } catch (e) {
+      // pas de connexion ou limite de l'API atteinte → on ignore silencieusement
+    }
+  });
+</script>
 
     <footer>
       <span>© 2026 Chitollie</span>
