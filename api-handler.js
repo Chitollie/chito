@@ -81,7 +81,7 @@ export default {
         const stripe = new Stripe(env.STRIPE_SECRET_KEY);
 
         const session = await stripe.checkout.sessions.create({
-          ui_mode: 'embedded',
+          ui_mode: 'custom',
           mode: 'payment',
           billing_address_collection: 'auto',
           phone_number_collection: { enabled: false },

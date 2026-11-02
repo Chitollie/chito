@@ -1,6 +1,6 @@
 
-import worker from '../../api-handler.js';
+import handler from '../../api-handler.js';
 
 export async function onRequest(context) {
-  return worker.fetch(context.request, context.env);
+  return handler.fetch(context.request, context.env);
 }
