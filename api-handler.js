@@ -86,7 +86,6 @@ export default {
           billing_address_collection: 'auto',
           phone_number_collection: { enabled: false },
           automatic_tax: { enabled: false },
-          submit_type: 'donate',
           line_items: [{
             price_data: {
               currency: 'eur',
