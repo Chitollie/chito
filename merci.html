@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chitollie — Merci</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #f0eaf8;
+      --bg2:      #e8dff5;
+      --paper:    #faf7fd;
+      --ink:      #3b2d5a;
+      --dim:      rgba(59,45,90,0.45);
+      --accent:   #9b6fd4;
+      --accent2:  #c89be0;
+      --soft:     #d4b8f0;
+      --pink:     #f0b8d8;
+      --mint:     #b8e8d4;
+      --line:     rgba(155,111,212,0.18);
+      --card:     rgba(255,255,255,0.65);
+    }
+
+    body { cursor: none; }
+    #cursor {
+      position: fixed;
+      width: 12px; height: 12px;
+      background: var(--accent);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: width 0.25s, height 0.25s, background 0.25s;
+    }
+    #cursor.hover {
+      width: 32px; height: 32px;
+      background: var(--soft);
+      opacity: 0.7;
+    }
+
+    html, body {
+      min-height: 100%;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Nunito', sans-serif;
+      font-weight: 400;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 55% 45% at 10% 15%, rgba(200,155,224,0.22) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 50% at 90% 80%, rgba(184,232,212,0.18) 0%, transparent 65%),
+        radial-gradient(ellipse 35% 40% at 80% 10%, rgba(247,216,160,0.15) 0%, transparent 60%),
+        radial-gradient(ellipse 30% 35% at 20% 85%, rgba(240,184,216,0.15) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .page {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      grid-template-rows: 1fr auto;
+    }
+
+    .sidebar {
+      grid-row: 1 / 3;
+      border-right: 1px solid var(--line);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 0;
+      gap: 1.5rem;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      background: rgba(240,234,248,0.6);
+      backdrop-filter: blur(8px);
+    }
+    .sidebar-logo {
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      font-family: 'Nunito', sans-serif;
+      font-weight: 700;
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      color: var(--accent2);
+    }
+    .sidebar-line { flex: 1; width: 1px; background: var(--line); }
+    .sidebar-index { font-size: 0.55rem; letter-spacing: 0.1em; color: var(--dim); }
+
+    main {
+      padding: 2.5rem 4.5rem 2rem 4rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6vw;
+      animation: fadeIn 0.5s ease both;
+    }
+    .back-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--dim);
+      transition: color 0.2s;
+    }
+    .back-btn:hover { color: var(--accent); }
+    .nav-tag { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--dim); }
+
+    .hero { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+    .hero-eyebrow {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--accent2);
+      margin-bottom: 0.5rem;
+      animation: fadeIn 0.5s 0.1s ease both;
+    }
+    .hero-name {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 700;
+      font-size: clamp(3.5rem, 10vw, 8rem);
+      line-height: 0.9;
+      color: var(--ink);
+      animation: slideUp 0.75s 0.12s cubic-bezier(0.16,1,0.3,1) both;
+    }
+    .hero-sub {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: clamp(0.95rem, 1.8vw, 1.15rem);
+      color: var(--dim);
+      margin-top: 1.2rem;
+      max-width: 380px;
+      line-height: 1.65;
+      animation: fadeIn 0.5s 0.3s ease both;
+    }
+
+    .support-block {
+      margin-top: clamp(2.5rem, 5vw, 4rem);
+      border-top: 1px solid var(--line);
+      padding-top: 2rem;
+      animation: fadeIn 0.5s 0.45s ease both;
+    }
+    .col-label {
+      font-size: 0.58rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent2);
+      margin-bottom: 1rem;
+    }
+
+    .tipeee-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+    .tipeee-note {
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      color: var(--dim);
+    }
+
+    footer {
+      padding: 1.4rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--line);
+      animation: fadeIn 0.5s 0.55s ease both;
+    }
+    footer span { font-size: 0.58rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--dim); }
+
+    @keyframes fadeIn  { from { opacity:0; } to { opacity:1; } }
+    @keyframes slideUp { from { opacity:0; transform:translateY(28px); } to { opacity:1; transform:translateY(0); } }
+
+
+    .context-note { font-size: 0.8rem; color: var(--accent); font-weight: 600; margin-top: 0.8rem; min-height: 1em; }
+    .amounts { display: flex; flex-wrap: wrap; gap: 0.6rem; max-width: 560px; }
+    .amount-btn {
+      font: inherit; font-weight: 700; font-size: 0.95rem; cursor: none;
+      padding: 0.7rem 1.3rem; border-radius: 8px; color: var(--ink);
+      background: var(--card); border: 1px solid var(--line);
+      transition: border-color 0.2s, background 0.2s, transform 0.2s;
+    }
+    .amount-btn:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .amount-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .amount-custom { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.8rem; font-size: 0.8rem; color: var(--dim); }
+    .amount-custom input {
+      font: inherit; width: 110px; padding: 0.6rem 0.8rem; border-radius: 8px;
+      border: 1px solid var(--line); background: var(--paper); color: var(--ink);
+    }
+    .amount-custom input:focus { outline: none; border-color: var(--accent); }
+    .pay-btn, .link-btn {
+      font: inherit; font-weight: 700; font-size: 0.8rem; letter-spacing: 0.08em; cursor: none;
+      margin-top: 1.1rem; padding: 0.8rem 1.6rem; border-radius: 8px; border: none;
+      background: var(--accent); color: #fff; transition: background 0.2s, transform 0.2s;
+    }
+    .pay-btn:hover { background: var(--accent2); transform: translateY(-2px); }
+    .pay-btn:disabled { opacity: 0.5; transform: none; }
+    .link-btn { background: transparent; color: var(--dim); padding: 0.4rem 0; margin-top: 0.8rem; text-decoration: underline; }
+    .link-btn:hover { background: transparent; color: var(--accent); }
+    #checkout-section[hidden], #amount-section[hidden] { display: none; }
+    .tipeee-project-card {
+      display: inline-block; text-decoration: none; font-weight: 700; font-size: 0.85rem;
+      padding: 0.8rem 1.4rem; border-radius: 8px; color: var(--ink);
+      background: var(--card); border: 1px solid var(--line);
+      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    }
+    .tipeee-project-card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 8px 16px rgba(155,111,212,0.12); }
+    .amount-btn:focus-visible, .pay-btn:focus-visible, .link-btn:focus-visible, .tipeee-project-card:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    @media (hover: none) { body, .amount-btn, .pay-btn, .link-btn { cursor: auto; } #cursor { display: none; } }
+
+    @media (max-width: 620px) {
+      .page { grid-template-columns: 38px 1fr; }
+      main { padding: 2rem 1.6rem 1.5rem; }
+      footer { padding: 1rem 1.6rem; }
+      nav { margin-bottom: 2.5rem; }
+    }
+  </style>
+  </head>
+<body>
+  <div id="cursor"></div>
+
+  <div class="page">
+    <aside class="sidebar">
+      <span class="sidebar-logo">Chitollie</span>
+      <div class="sidebar-line"></div>
+      <span class="sidebar-index">♥</span>
+    </aside>
+
+    <main>
+      <nav>
+        <a href="index.html" class="back-btn">← Retour</a>
+        <span class="nav-tag">Soutien</span>
+      </nav>
+
+      <section class="hero">
+        <p class="hero-eyebrow" id="eyebrow">✦ Paiement</p>
+        <h1 class="hero-name" id="title">Merci</h1>
+        <p class="hero-sub" id="sub">Vérification du paiement…</p>
+      </section>
+
+      <div class="support-block">
+        <a href="index.html" class="tipeee-project-card">Retour à l’accueil</a>
+      </div>
+    </main>
+
+    <footer>
+      <span>© 2026 Chitollie</span>
+      <span>Streamer · Créateur</span>
+    </footer>
+  </div>
+
+  <script>
+    (async () => {
+      const id = new URLSearchParams(location.search).get('session_id');
+      const title = document.getElementById('title');
+      const sub = document.getElementById('sub');
+      if (!id) { title.textContent = 'Oups'; sub.textContent = 'Aucune session de paiement trouvée.'; return; }
+      try {
+        const res = await fetch('/api/session-status?session_id=' + encodeURIComponent(id));
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Erreur');
+        if (data.status === 'complete' && data.payment_status === 'paid') {
+          title.textContent = 'Merci ♥';
+          sub.textContent = 'Ton don a bien été reçu. Il aide vraiment à faire vivre mes projets.';
+        } else if (data.status === 'complete') {
+          title.textContent = 'Merci !';
+          sub.textContent = 'Ton paiement est en cours de traitement. Tu n’as rien d’autre à faire.';
+        } else {
+          title.textContent = 'Paiement non finalisé';
+          sub.textContent = 'Rien n’a été débité. Tu peux réessayer depuis la page « Me soutenir ».';
+        }
+      } catch (e) {
+        title.textContent = 'Oups';
+        sub.textContent = 'Impossible de vérifier le paiement pour le moment. Vérifie ta boîte mail : Stripe t’envoie un reçu.';
+        console.error(e);
+      }
+    })();
+  </script>
+  <script>
+    const c = document.getElementById('cursor');
+    document.addEventListener('mousemove', e => {
+      c.style.left = e.clientX + 'px';
+      c.style.top  = e.clientY + 'px';
+    });
+    document.querySelectorAll('a').forEach(el => {
+      el.addEventListener('mouseenter', () => c.classList.add('hover'));
+      el.addEventListener('mouseleave', () => c.classList.remove('hover'));
+    });
+  </script>
+</body>
+</html>
