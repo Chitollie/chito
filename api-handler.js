@@ -103,8 +103,17 @@ export default {
 
         return json({ client_secret: session.client_secret });
       } catch (error) {
-        console.error('Stripe Checkout:', error);
-        return json({ error: 'Unable to initialize payment' }, 500);
+        console.error('Stripe Checkout:', {
+          message: error.message,
+          type: error.type,
+          code: error.code,
+          param: error.param
+        });
+
+        return json({
+          error: 'Unable to initialize payment',
+          details: error.message
+        }, 500);
       }
     }
 
