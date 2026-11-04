@@ -161,6 +161,15 @@
       padding-top: 2rem;
       animation: fadeIn 0.5s 0.45s ease both;
     }
+    /* Stripe à gauche, Tipeee à droite (empilés sur écran étroit) */
+    .support-row {
+      margin-top: clamp(2.5rem, 5vw, 4rem);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(220px, 320px);
+      gap: 2rem 4rem;
+      align-items: start;
+    }
+    .support-row .support-block { margin-top: 0; }
     .col-label {
       font-size: 0.58rem;
       font-weight: 700;
@@ -232,6 +241,10 @@
     .amount-btn:focus-visible, .pay-btn:focus-visible, .link-btn:focus-visible, .tipeee-project-card:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
     @media (hover: none) { body, .amount-btn, .pay-btn, .link-btn { cursor: auto; } #cursor { display: none; } }
 
+    @media (max-width: 900px) {
+      .support-row { grid-template-columns: minmax(0, 1fr); }
+    }
+
     @media (max-width: 620px) {
       .page { grid-template-columns: 38px 1fr; }
       main { padding: 2rem 1.6rem 1.5rem; }
@@ -263,6 +276,7 @@
         <p class="hero-sub">Chaque contribution aide à faire vivre ce projet et à créer toujours plus de contenu.</p>
       </section>
 
+      <div class="support-row">
       <div class="support-block">
         <p class="col-label">✦ Paiement par carte</p>
         <p id="context-note" class="context-note"></p>
@@ -294,6 +308,7 @@
           <a href="https://fr.tipeee.com/chitollie" class="tipeee-project-card" target="_blank" rel="noopener">Soutenez Chitollie sur Tipeee</a>
           <span class="tipeee-note">Paiement sécurisé par Tipeee</span>
         </div>
+      </div>
       </div>
     </main>
 
@@ -387,7 +402,7 @@
             }
           });
         } catch (error) {
-          message.textContent = 'Le formulaire de paiement est temporairement indisponible. Tu peux soutenir via Tipeee ci-dessous.';
+          message.textContent = 'Le formulaire de paiement est temporairement indisponible. Tu peux soutenir via Tipeee.';
           console.error(error);
           amountSection.hidden = false;
           checkoutSection.hidden = true;
