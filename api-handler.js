@@ -6,6 +6,10 @@ const PRODUCTS = {
   default: 'Don — Chitollie'
 };
 
+// Version d'API alignée avec stripe.js « dahlia » utilisé dans donation.html
+const STRIPE_API_VERSION = '2026-03-25.dahlia';
+const makeStripe = env => new Stripe(env.STRIPE_SECRET_KEY, { apiVersion: STRIPE_API_VERSION });
+
 const json = (data, status = 200) =>
   Response.json(data, {
     status,
@@ -78,14 +82,15 @@ export default {
         : 'default';
 
       try {
-        const stripe = new Stripe(env.STRIPE_SECRET_KEY);
+        const stripe = makeStripe(env);
 
         const session = await stripe.checkout.sessions.create({
-          ui_mode: 'custom',
+          ui_mode: 'form',
           mode: 'payment',
           billing_address_collection: 'auto',
           phone_number_collection: { enabled: false },
           automatic_tax: { enabled: false },
+          submit_type: 'donate',
           line_items: [{
             price_data: {
               currency: 'eur',
@@ -102,17 +107,8 @@ export default {
 
         return json({ client_secret: session.client_secret });
       } catch (error) {
-        console.error('Stripe Checkout:', {
-          message: error.message,
-          type: error.type,
-          code: error.code,
-          param: error.param
-        });
-
-        return json({
-          error: 'Unable to initialize payment',
-          details: error.message
-        }, 500);
+        console.error('Stripe Checkout:', error);
+        return json({ error: 'Unable to initialize payment' }, 500);
       }
     }
 
@@ -128,7 +124,7 @@ export default {
       }
 
       try {
-        const stripe = new Stripe(env.STRIPE_SECRET_KEY);
+        const stripe = makeStripe(env);
         const session = await stripe.checkout.sessions.retrieve(id);
 
         return json({
@@ -150,7 +146,7 @@ export default {
         return new Response('Webhook not configured', { status: 503 });
       }
 
-      const stripe = new Stripe(env.STRIPE_SECRET_KEY);
+      const stripe = makeStripe(env);
 
       let event;
 
